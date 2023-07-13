@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/mainPage";
 import CreatePost from "./pages/createPost";
+import Post from "./pages/post";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/createpost" element={<CreatePost />} />
+          <Route path="/post/:postid" element={<Post />} />
         </Routes>
       </BrowserRouter>
     </>
