@@ -8,7 +8,7 @@ export default function CreatePost() {
   const [text, setText] = useState("");
 
   const submitPost = () => {
-    Axios.post("http://localhost:3003/createPost", {
+    Axios.post("http://localhost:3030/createPost", {
       userName: userName,
       title: title,
       text: text,

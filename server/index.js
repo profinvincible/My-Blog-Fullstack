@@ -1,14 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const db = require("../config/db");
+const db = require("./config/db");
+
 // import { config } from "dotenv";
-require("dotenv").config();
+// require("dotenv").config();
 
 // config();
 // console.log(process.env.DB_URI);
 
 const app = express();
-const PORT = 3003;
+const PORT = process.env.PORT || 3030;
 
 app.use(express.json());
 app.use(cors());
@@ -70,6 +71,6 @@ app.post("/like/:id", (req, res) => {
   );
 });
 
-// app.listen(3003, () => {
-//   console.log("yey, your server is running on port 3003");
+// app.listen(3030, () => {
+//   console.log("yey, your server is running on port 3030");
 // });

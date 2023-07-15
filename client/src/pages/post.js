@@ -8,7 +8,7 @@ export default function Post() {
   const [post, setPost] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:3003/getfromid/${postid}`).then((data) => {
+    axios.get(`http://localhost:3030/getfromid/${postid}`).then((data) => {
       setPost({
         title: data.data[0].title,
         posttext: data.data[0].post_text,

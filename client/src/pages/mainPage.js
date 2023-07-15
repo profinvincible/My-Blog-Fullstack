@@ -7,14 +7,14 @@ export default function MainPage() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3003/get").then((data) => {
+    axios.get("http://localhost:3030/get").then((data) => {
       setPostList(data.data);
       console.log(data.data);
     });
   }, []);
 
   const LikePost = (id) => {
-    axios.post(`http://localhost:3003/like/${id}`).then((response) => {
+    axios.post(`http://localhost:3030/like/${id}`).then((response) => {
       console.log(response);
     });
   };
