@@ -17,7 +17,7 @@ export default function Post() {
           username: data.data[0].username,
         });
       });
-  }, []);
+  }, ["title", "post_text", "username"]);
   return (
     <div className="IndividualPost">
       <div className="Posts Individual">
