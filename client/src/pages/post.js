@@ -17,7 +17,8 @@ export default function Post() {
           username: data.data[0].username,
         });
       });
-  }, ["title", "post_text", "username"]);
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="IndividualPost">
       <div className="Posts Individual">
