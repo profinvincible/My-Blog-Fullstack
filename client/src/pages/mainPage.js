@@ -6,11 +6,38 @@ export default function MainPage() {
   const [postList, setPostList] = useState([]);
   let navigate = useNavigate();
 
+  // useEffect(() => {
+  //   axios.get("https://myminiblog.onrender.com/get").then((data) => {
+  //     setPostList(data.data);
+  //     console.log(data.data);
+  //   });
+  // }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("https://myminiblog.onrender.com/get")
+  //     .then((response) => {
+  //       const responseData = response.data;
+  //       const postsArray = Object.values(responseData); // Convert object values to an array
+  //       setPostList(postsArray);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    axios.get("https://myminiblog.onrender.com/get").then((data) => {
-      setPostList(data.data);
-      console.log(data.data);
-    });
+    axios
+      .get("https://myminiblog.onrender.com/get")
+      .then((response) => {
+        const responseData = response.data;
+        const postsArray = Object.values(responseData); // Convert object values to an array
+        console.log(responseData); // Check the response data
+        console.log(postsArray); // Check the converted array
+        setPostList(postsArray);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
   const LikePost = (id) => {
