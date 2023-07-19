@@ -8,7 +8,7 @@ export default function CreatePost() {
   const [text, setText] = useState("");
 
   const submitPost = () => {
-    Axios.post("https://myminiblog.onrender.com/createPost", {
+    Axios.post("https://my-mini-blog.onrender.com/createPost", {
       userName: userName,
       title: title,
       text: text,

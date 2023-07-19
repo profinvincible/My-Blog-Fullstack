@@ -9,7 +9,7 @@ export default function Post() {
 
   useEffect(() => {
     axios
-      .get(`https://myminiblog.onrender.com/getfromid/${postid}`)
+      .get(`https://my-mini-blog.onrender.com/getfromid/${postid}`)
       .then((data) => {
         setPost({
           title: data.data[0].title,

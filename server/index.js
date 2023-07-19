@@ -2,12 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./config/db");
 
-// import { config } from "dotenv";
-// require("dotenv").config();
-
-// config();
-// console.log(process.env.DB_URI);
-
 const app = express();
 const PORT = process.env.PORT || 3030;
 
