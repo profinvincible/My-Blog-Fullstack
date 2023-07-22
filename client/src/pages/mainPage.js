@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   const [postList, setPostList] = useState([]);
+
+  // const [showmore, setShowmore] = useState(false);
+  const [like, setLike] = useState(false);
+  // const [updatepost, setupdatepost] = useState("");
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -12,18 +16,6 @@ export default function MainPage() {
       console.log(data.data);
     });
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get("https://my-mini-blog-api-deployedd.onrender.com/get")
-  //     .then((response) => {
-  //       const responseData = response.data;
-  //       const postsArray = Object.values(responseData); // Convert object values to an array
-  //       setPostList(postsArray);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
 
   const LikePost = (id) => {
     axios.post(`https://my-mini-blog.onrender.com/${id}`).then((response) => {
@@ -31,67 +23,91 @@ export default function MainPage() {
     });
   };
 
+  const deletePost = (id) => {
+    axios.delete(`https://my-mini-blog.onrender.com/delete${id}`);
+    setPostList(
+      postList.filter((val) => {
+        return val.id !== id;
+      })
+    );
+  };
+
+  // const deletePost = (id) => {
+  //   const encodedId = encodeURIComponent(id);
+  //   axios
+  //     .delete(`https://my-mini-blog.onrender.com/delete/34/${encodedId}`)
+  //     .then((response) => {
+  //       // The delete request was successful, now update the state
+  //       setPostList(
+  //         postList.filter((val) => {
+  //           return val.id !== id;
+  //         })
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       // Handle error if the request fails
+  //       console.error("Error deleting post:", error.response);
+  //     });
+  // };
+
   return (
     <div className="MainPage">
       <div className="Everything">
         {postList.map((val, key) => {
           return (
-            <div
-              className="Posts"
-              key={key}
-              onClick={() => {
-                navigate(`/post/${val.id}`);
-              }}>
-              <h1>{val.title}</h1>
-              <p>
-                {val.post_text.length > 100
-                  ? val.post_text.substring(0, 100) + "..."
-                  : val.post_text}
-              </p>
-              <button
+            <>
+              <div
+                className="Posts"
+                key={key}
                 onClick={() => {
-                  LikePost(val.id);
+                  navigate(`/post/${val.id}`);
                 }}>
-                Like
-              </button>
-              <div className="flex">
-                <h4>{val.username}</h4>
-                <h4>{val.likes}</h4>
+                <h1>{val.title}</h1>
+                <p>
+                  {val.post_text.length > 100
+                    ? val.post_text.substring(0, 100) + "..."
+                    : val.post_text}
+                </p>
+                <button
+                  onClick={() => {
+                    LikePost(val.id);
+                  }}
+                  className={
+                    val.likes > 0 ? "likebutton likestyle  " : "likebutton "
+                  }>
+                  Like
+                </button>
+                <div className="flex">
+                  <h4>{val.username}</h4>
+                  <h4>{val.likes}</h4>
+                </div>
+                <div>
+                  <button
+                    onClick={() => {
+                      deletePost(val.id);
+                    }}>
+                    Delete
+                  </button>
+                </div>
+                {/* <div>
+                  <input
+                    placeholder="update"
+                    onChange={(e) => setupdatepost(e.target.value)}
+                    type="text"
+                  /> */}
+                {/* <button
+                    onClick={() => {
+                      update(val.id);
+                    }}
+                    className="btn btn-primary  px-0 py-0 mx-2">
+                    Update
+                  </button> */}
+                {/* </div> */}
               </div>
-            </div>
+            </>
           );
         })}
       </div>
     </div>
   );
 }
-
-// useEffect(() => {
-//   axios
-//     .get("https://myminiblog.onrender.com/get")
-//     .then((response) => {
-//       const responseData = response.data;
-//       const postsArray = Object.values(responseData); // Convert object values to an array
-//       setPostList(postsArray);
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching data:", error);
-//     });
-// }, []);
-
-// const newArray = [...postList];
-
-// useEffect(() => {
-//   axios
-//     .get("https://myminiblog.onrender.com/get")
-//     .then((response) => {
-//       const responseData = response.data;
-//       const postsArray = Object.values(responseData); // Convert object values to an array
-//       console.log(responseData); // Check the response data
-//       console.log(postsArray); // Check the converted array
-//       setPostList(postsArray);
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching data:", error);
-//     });
-// }, []);

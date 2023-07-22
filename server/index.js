@@ -65,6 +65,43 @@ app.post("/like/:id", (req, res) => {
   );
 });
 
+app.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  // Your database query to delete the post with the provided ID goes here
+  // ...
+  db.query("DELETE FROM posts where id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+// app.delete("/delete/:name", (req, res) => {
+//   const name = req.params.name;
+//   db.query("DELETE FROM posts WHERE name?", name, (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log(result);
+//     }
+//   });
+// });
+
+// app.delete("/delete/:name", (req, res) => {
+//   const name = req.params.name;
+//   db.query("DELETE FROM posts WHERE name = ?", name, (err, result) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).send("Error deleting the post.");
+//     } else {
+//       console.log(result);
+//       res.status(200).send("Post deleted successfully.");
+//     }
+//   });
+// });
+
 // app.listen(3030, () => {
 //   console.log("yey, your server is running on port 3030");
 // });
