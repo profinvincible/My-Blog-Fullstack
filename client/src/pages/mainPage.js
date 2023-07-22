@@ -2,53 +2,83 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// export default function MainPage() {
+//   const [postList, setPostList] = useState([]);
+
+//   let navigate = useNavigate();
+
+//   useEffect(() => {
+//     axios.get("https://my-mini-blog.onrender.com/get").then((data) => {
+//       setPostList(data.data);
+//       console.log(data.data);
+//     });
+//   }, []);
+
+//   const LikePost = (id) => {
+//     axios.post(`https://my-mini-blog.onrender.com/${id}`).then((response) => {
+//       console.log(response);
+//     });
+//   };
+
+//   const deletePost = (id) => {
+//     axios.delete(`https://my-mini-blog.onrender.com/delete${id}`);
+//     setPostList(
+//       postList.filter((val) => {
+//         return val.id !== id;
+//       })
+//     );
+//   };
+
+// ... (other imports and code above)
+
 export default function MainPage() {
   const [postList, setPostList] = useState([]);
-
-  // const [showmore, setShowmore] = useState(false);
-  const [like, setLike] = useState(false);
-  // const [updatepost, setupdatepost] = useState("");
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("https://my-mini-blog.onrender.com/get").then((data) => {
-      setPostList(data.data);
-      console.log(data.data);
-    });
+    axios
+      .get("https://my-mini-blog.onrender.com/get")
+      .then((response) => {
+        setPostList(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
   }, []);
 
   const LikePost = (id) => {
-    axios.post(`https://my-mini-blog.onrender.com/${id}`).then((response) => {
-      console.log(response);
-    });
+    axios
+      .post(`https://my-mini-blog.onrender.com/like/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        // Assuming the server returns updated post data, update the postList state
+        setPostList((prevPostList) =>
+          prevPostList.map((post) =>
+            post.id === id ? { ...post, likes: response.data.likes } : post
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error liking post:", error);
+      });
   };
 
   const deletePost = (id) => {
-    axios.delete(`https://my-mini-blog.onrender.com/delete${id}`);
-    setPostList(
-      postList.filter((val) => {
-        return val.id !== id;
+    axios
+      .delete(`https://my-mini-blog.onrender.com/delete/${id}`)
+      .then(() => {
+        // Filter the deleted post out of the postList state
+        setPostList((prevPostList) =>
+          prevPostList.filter((post) => post.id !== id)
+        );
       })
-    );
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
   };
 
-  // const deletePost = (id) => {
-  //   const encodedId = encodeURIComponent(id);
-  //   axios
-  //     .delete(`https://my-mini-blog.onrender.com/delete/34/${encodedId}`)
-  //     .then((response) => {
-  //       // The delete request was successful, now update the state
-  //       setPostList(
-  //         postList.filter((val) => {
-  //           return val.id !== id;
-  //         })
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       // Handle error if the request fails
-  //       console.error("Error deleting post:", error.response);
-  //     });
-  // };
+  // ... (rest of the code)
 
   return (
     <div className="MainPage">

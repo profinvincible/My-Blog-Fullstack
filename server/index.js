@@ -51,6 +51,19 @@ app.post("/createPost", (req, res) => {
   );
 });
 
+// app.post("/like/:id", (req, res) => {
+//   const id = req.params.id;
+//   db.query(
+//     "UPDATE posts SET likes = likes + 1 WHERE id=?",
+//     id,
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       }
+//       console.log(result);
+//     }
+//   );
+// });
 app.post("/like/:id", (req, res) => {
   const id = req.params.id;
   db.query(
@@ -59,8 +72,21 @@ app.post("/like/:id", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
+        res.status(500).json({ error: "Failed to like the post." });
+      } else {
+        // After updating the likes count, get the updated post data
+        db.query("SELECT * FROM posts WHERE id=?", id, (err, result) => {
+          if (err) {
+            console.log(err);
+            res
+              .status(500)
+              .json({ error: "Failed to fetch updated post data." });
+          } else {
+            const updatedPost = result[0];
+            res.status(200).json(updatedPost);
+          }
+        });
       }
-      console.log(result);
     }
   );
 });
@@ -77,30 +103,6 @@ app.delete("/delete/:id", (req, res) => {
     }
   });
 });
-
-// app.delete("/delete/:name", (req, res) => {
-//   const name = req.params.name;
-//   db.query("DELETE FROM posts WHERE name?", name, (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log(result);
-//     }
-//   });
-// });
-
-// app.delete("/delete/:name", (req, res) => {
-//   const name = req.params.name;
-//   db.query("DELETE FROM posts WHERE name = ?", name, (err, result) => {
-//     if (err) {
-//       console.log(err);
-//       res.status(500).send("Error deleting the post.");
-//     } else {
-//       console.log(result);
-//       res.status(200).send("Post deleted successfully.");
-//     }
-//   });
-// });
 
 // app.listen(3030, () => {
 //   console.log("yey, your server is running on port 3030");
