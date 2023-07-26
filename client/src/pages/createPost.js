@@ -54,6 +54,7 @@ export default function CreatePost() {
           />
           <label>Post text</label>
           <textarea
+            className="opal"
             value={text}
             onChange={(e) => {
               setText(e.target.value);

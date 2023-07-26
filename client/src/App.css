@@ -43,6 +43,22 @@ body {
     "Lucida Sans", Arial, sans-serif;
 }
 
+@media (max-width: 800px) {
+  .Post {
+    /* max-width: 300px; Reduce the width for smaller screens */
+    margin-top: 40px;
+    /* height: calc(100vh - 70px); */
+  }
+}
+
+@media (max-width: 507px) {
+  .posts {
+    margin-top: 40px;
+    max-width: 400px;
+    /* height: calc(100vh - 70px); */
+  }
+}
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -67,6 +83,13 @@ textarea {
   height: 150px;
   width: 400px;
   border: 2px solid pink;
+}
+
+@media (max-width: 507px) {
+  .opal {
+    height: 150px;
+    width: 320px;
+  }
 }
 
 /* MAIN PAGE */
@@ -128,14 +151,13 @@ button:hover {
   margin: 5px;
 }
 
-
-.btn{
-  background-color:pink;
-  border:none;
+.btn {
+  background-color: pink;
+  border: none;
   width: 82%;
-  height:15%;
+  height: 15%;
   margin-top: 50px;
   margin-bottom: 10px;
   font-size: 18px;
-  font-weight:bold
+  font-weight: bold;
 }

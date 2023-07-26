@@ -33,43 +33,20 @@ app.get("/getfromid/:id", (req, res) => {
   });
 });
 
-// app.post("/createPost", (req, res) => {
-//   const username = req.body.userName;
-//   const title = req.body.title;
-//   const text = req.body.text;
-//   // console.log(username + title + text);
-//   db.query(
-//     "INSERT INTO posts(title,post_text,username)VALUES(?,?,?)",
-//     [title, text, username],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       }
-
-//       console.log(result);
-//     }
-//   );
-// });
-
 app.post("/createPost", (req, res) => {
-  const { userName, title, text } = req.body;
-
-  // Check if any of the required fields is missing
-  if (!userName || !title || !text) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-
+  const username = req.body.userName;
+  const title = req.body.title;
+  const text = req.body.text;
+  // console.log(username + title + text);
   db.query(
-    "INSERT INTO posts(title, post_text, username) VALUES (?, ?, ?)",
-    [title, text, userName],
+    "INSERT INTO posts(title,post_text,username)VALUES(?,?,?)",
+    [title, text, username],
     (err, result) => {
       if (err) {
-        console.log("Error creating post:", err);
-        return res.status(500).json({ error: "Failed to create post" });
+        console.log(err);
       }
 
-      console.log("Post created successfully");
-      return res.status(200).json({ message: "Post created successfully" });
+      console.log(result);
     }
   );
 });
