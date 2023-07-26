@@ -27,7 +27,8 @@ export default function CreatePost() {
       });
   };
 
-  const handleSubmit = (Event) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     submitPost();
     navigate("/");
   };
