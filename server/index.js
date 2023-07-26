@@ -51,19 +51,6 @@ app.post("/createPost", (req, res) => {
   );
 });
 
-// app.post("/like/:id", (req, res) => {
-//   const id = req.params.id;
-//   db.query(
-//     "UPDATE posts SET likes = likes + 1 WHERE id=?",
-//     id,
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       }
-//       console.log(result);
-//     }
-//   );
-// });
 app.post("/like/:id", (req, res) => {
   const id = req.params.id;
   db.query(
@@ -104,6 +91,57 @@ app.delete("/delete/:id", (req, res) => {
   });
 });
 
+// app.put("/update/:id", (req, res) => {
+//   const postId = parseInt(req.params.id);
+//   const updatedPostText = req.body.updatedPostText;
+
+//   const postToUpdate = postList.find((post) => post.id === postId);
+//   if (!postToUpdate) {
+//     return res.status(404).json({ message: "Post not found" });
+//   }
+
+//   postToUpdate.post_text = updatedPostText;
+//   res.json({ message: "Post updated successfully", post: postToUpdate });
+// });
+
+app.put("/update/:id", (req, res) => {
+  const id = req.params.id;
+  const { updatedPostText } = req.body;
+
+  db.query(
+    "UPDATE posts SET post_text = ? WHERE id = ?",
+    [updatedPostText, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ error: "Error updating post" });
+      } else {
+        console.log("Post updated successfully");
+        res.json({ message: "Post updated successfully" });
+      }
+    }
+  );
+});
+
+// app.put("/update/:id", (req, res) => {
+//   const id = req.params.id;
+//   const { updatedPostText } = req.body;
+
+//   db.query(
+//     "UPDATE posts SET post_text = ? WHERE id = ?",
+//     [updatedPostText, id],
+//     (err, result) => {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).json({ error: "Error updating post" });
+//       } else {
+//         console.log("Post updated successfully");
+//         // Assuming the server responds with the updated post data, you can send it to the client
+//         res.json({ message: "Post updated successfully", updatedPostText });
+//       }
+//     }
+//   );
+// });
 // app.listen(3030, () => {
 //   console.log("yey, your server is running on port 3030");
 // });
