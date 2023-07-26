@@ -28,7 +28,7 @@ export default function CreatePost() {
   };
 
   const handleSubmit = (Event) => {
-    // Event.preventDefault();
+    submitPost();
     navigate("/");
   };
 
@@ -59,7 +59,7 @@ export default function CreatePost() {
               setText(e.target.value);
             }}
           />
-          <button className="btn" type="submit" onClick={submitPost}>
+          <button className="btn" type="submit">
             Submit Post
           </button>
           {message && <p>{message}</p>}
