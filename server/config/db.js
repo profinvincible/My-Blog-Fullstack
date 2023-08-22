@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+const mysql2 = require("mysql2");
 
 // const db = mysql.createPool({
 //   user: "admin",
@@ -16,12 +16,13 @@ const mysql = require("mysql");
 //   database: "my_blog",
 // });
 
-const db = mysql.createPool({
-  user: "4352169_blog",
-  host: "fdb1028.awardspace.net",
-  password: "+b9}mcjo3W:HV)Pq",
-  database: "	my_blog",
-  port: "3306",
+const db = mysql2.createPool({
+  user: "root",
+  host: "containers-us-west-209.railway.app",
+  password: "cEZ6wbxDpDKsQQb2RZz3",
+  database: "railway",
+  port: "7856",
+  // url: "mysql://root:cEZ6wbxDpDKsQQb2RZz3@containers-us-west-209.railway.app:7856/railway",
 });
 
 module.exports = db;
