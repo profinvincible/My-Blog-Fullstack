@@ -77,51 +77,57 @@ export default function MainPage() {
   return (
     <div className="MainPage">
       <div className="Everything">
-        {postList.map((post) => (
-          <div key={post.id} className="Posts">
-            <h1>{post.title}</h1>
-            <p>
-              {post.post_text.length > 100
-                ? post.post_text.substring(0, 100) + "..."
-                : post.post_text}
-            </p>
-            <button
-              onClick={() => likePost(post.id)}
-              className={
-                post.likes > 0 ? "likebutton likestyle" : "likebutton"
-              }>
-              Like
-            </button>
-            <div className="flex">
-              <h4>{post.username}</h4>
-              <h4>{post.likes}</h4>
+        {postList.length > 0 ? (
+          postList.map((post) => (
+            <div key={post.id} className="Posts">
+              <h1>{post.title}</h1>
+              <p>
+                {post.post_text.length > 100
+                  ? post.post_text.substring(0, 100) + "..."
+                  : post.post_text}
+              </p>
+              <button
+                onClick={() => likePost(post.id)}
+                className={
+                  post.likes > 0 ? "likebutton likestyle" : "likebutton"
+                }>
+                Like
+              </button>
+              <div className="flex">
+                <h4>{post.username}</h4>
+                <h4>{post.likes}</h4>
+              </div>
+              <div>
+                {updatePostId === post.id ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={updatedPostText}
+                      onChange={(event) =>
+                        setUpdatedPostText(event.target.value)
+                      }
+                    />
+                    <button onClick={() => handleSaveUpdate(post.id)}>
+                      Save
+                    </button>
+                    <button
+                      onClick={() => {
+                        setUpdatedPostText("");
+                        setUpdatePostId(null);
+                      }}>
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => handleUpdate(post.id)}>Update</button>
+                )}
+                <button onClick={() => deletePost(post.id)}>Delete</button>
+              </div>
             </div>
-            <div>
-              {updatePostId === post.id ? (
-                <div>
-                  <input
-                    type="text"
-                    value={updatedPostText}
-                    onChange={(event) => setUpdatedPostText(event.target.value)}
-                  />
-                  <button onClick={() => handleSaveUpdate(post.id)}>
-                    Save
-                  </button>
-                  <button
-                    onClick={() => {
-                      setUpdatedPostText("");
-                      setUpdatePostId(null);
-                    }}>
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <button onClick={() => handleUpdate(post.id)}>Update</button>
-              )}
-              <button onClick={() => deletePost(post.id)}>Delete</button>
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );
