@@ -22,7 +22,7 @@ const db = mysql2.createPool({
   password: "cEZ6wbxDpDKsQQb2RZz3",
   database: "railway",
   port: "7856",
-  // url: "mysql://root:cEZ6wbxDpDKsQQb2RZz3@containers-us-west-209.railway.app:7856/railway",
+  url: "mysql://root:cEZ6wbxDpDKsQQb2RZz3@containers-us-west-209.railway.app:7856/railway",
 });
 
 module.exports = db;
