@@ -13,7 +13,7 @@ export default function MainPage() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("https://my-mini-blog.onrender.com/get");
+      const response = await axios.get("http://localhost:3030/get");
       console.log("API response:", response.data);
       setPostList(response.data); // Update postList state with fetched data
     } catch (error) {
@@ -26,7 +26,7 @@ export default function MainPage() {
   const likePost = async (id) => {
     try {
       const response = await axios.post(
-        `https://my-mini-blog.onrender.com/like/${id}`
+        `http://localhost:3030/like/${id}`
       );
       const updatedPostList = postList.map((post) =>
         post.id === id ? { ...post, likes: response.data.likes } : post
@@ -39,7 +39,7 @@ export default function MainPage() {
 
   const deletePost = async (id) => {
     try {
-      await axios.delete(`https://my-mini-blog.onrender.com/delete/${id}`);
+      await axios.delete(`http://localhost:3030/delete/${id}`);
       const updatedPostList = postList.filter((post) => post.id !== id);
       setPostList(updatedPostList);
     } catch (error) {
@@ -57,7 +57,7 @@ export default function MainPage() {
     console.log("Updating post with:", updatedPostText);
     try {
       const response = await axios.put(
-        `https://my-mini-blog.onrender.com/update/${id}`,
+        `http://localhost:3030/update/${id}`,
         {
           updatedPostText,
         }

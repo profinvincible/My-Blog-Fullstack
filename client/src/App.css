@@ -38,7 +38,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 30px);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
@@ -69,6 +69,7 @@ body {
   border: 2px solid pink;
   font-size: 24px;
   font-weight: bold;
+  margin-top: 50px;
 }
 
 .posts input {
@@ -77,6 +78,7 @@ body {
   margin: 15px;
   font-size: 24px;
   border: 2px solid pink;
+  
 }
 
 textarea {
@@ -157,7 +159,7 @@ button:hover {
   width: 82%;
   height: 15%;
   margin-top: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
 }
