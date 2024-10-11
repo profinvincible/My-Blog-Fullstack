@@ -13,20 +13,22 @@ export default function MainPage() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("https://my-mini-blog.onrender.com/get");
+      const response = await axios.get("http://localhost:3030/get");
       console.log("API response:", response.data);
       setPostList(response.data); // Update postList state with fetched data
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
+ 
+  
 
   console.log("postList:", postList);
 
   const likePost = async (id) => {
     try {
       const response = await axios.post(
-        `https://my-mini-blog.onrender.com/like/${id}`
+        `http://localhost:3030/like/${id}`
       );
       const updatedPostList = postList.map((post) =>
         post.id === id ? { ...post, likes: response.data.likes } : post
@@ -39,7 +41,7 @@ export default function MainPage() {
 
   const deletePost = async (id) => {
     try {
-      await axios.delete(`https://my-mini-blog.onrender.com/delete/${id}`);
+      await axios.delete(`http://localhost:3030/delete/${id}`);
       const updatedPostList = postList.filter((post) => post.id !== id);
       setPostList(updatedPostList);
     } catch (error) {
@@ -57,7 +59,7 @@ export default function MainPage() {
     console.log("Updating post with:", updatedPostText);
     try {
       const response = await axios.put(
-        `https://my-mini-blog.onrender.com/update/${id}`,
+        `http://localhost:3030/update/${id}`,
         {
           updatedPostText,
         }
@@ -73,6 +75,7 @@ export default function MainPage() {
       console.error("Error updating post:", error);
     }
   };
+  
 
   return (
     <div className="MainPage">
@@ -81,6 +84,7 @@ export default function MainPage() {
           postList.map((post) => (
             <div key={post.id} className="Posts">
               <h1>{post.title}</h1>
+              
               <p>
                 {post.post_text.length > 100
                   ? post.post_text.substring(0, 100) + "..."
@@ -132,3 +136,5 @@ export default function MainPage() {
     </div>
   );
 }
+
+

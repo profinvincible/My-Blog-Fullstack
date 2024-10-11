@@ -10,7 +10,7 @@ export default function CreatePost() {
   const navigate = useNavigate();
 
   const submitPost = () => {
-    Axios.post("https://my-mini-blog.onrender.com/createPost", {
+    Axios.post("http://localhost:3030/createPost", {
       userName: userName,
       title: title,
       text: text,
