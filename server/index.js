@@ -12,6 +12,8 @@ app.listen(process.env.PORT || PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+
+
 // app.get("/get", (req, res) => {
 //   db.query("SELECT * FROM posts", (err, result) => {
 //     if (err) {
