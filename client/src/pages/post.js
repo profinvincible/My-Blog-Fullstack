@@ -9,7 +9,7 @@ export default function Post() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3030/getfromid/${postid}`)
+      .get(`https://my-blog-fullstack.onrender.com/getfromid/${postid}`)
       .then((data) => {
         setPost({
           title: data.data[0].title,
