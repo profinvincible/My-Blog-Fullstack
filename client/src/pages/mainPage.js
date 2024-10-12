@@ -7,22 +7,38 @@ export default function MainPage() {
   const [updatePostId, setUpdatePostId] = useState(null);
   const [updatedPostText, setUpdatedPostText] = useState("");
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
-  const fetchPosts = async () => {
-    try {
-      const response = await axios.get("https://my-blog-fullstack.onrender.com/get");
-      console.log("API response:", response.data);
-      setPostList(response.data); // Update postList state with fetched data
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
-  };
+  // const fetchPosts = async () => {
+  //   try {
+  //     const response = await axios.get("https://my-blog-fullstack.onrender.com/get");
+  //     console.log("API response:", response.data);
+  //     setPostList(response.data); // Update postList state with fetched data
+  //   } catch (error) {
+  //     console.error("Error fetching posts:", error);
+  //   }
+  // };
  
   
-
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("https://my-blog-fullstack.onrender.com/get");
+        setPostList(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+  
+    fetchPosts(); // Initial fetch
+  
+    const interval = setInterval(fetchPosts, 5000); // Fetch every 5 seconds
+  
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+  
   console.log("postList:", postList);
 
   const likePost = async (id) => {
