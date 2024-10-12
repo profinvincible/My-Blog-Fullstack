@@ -296,7 +296,7 @@ export default function MainPage() {
     };
 
     fetchPosts(); // Initial fetch
-    const intervalId = setInterval(fetchPosts, 5000); // Fetch posts every 5 seconds
+    const intervalId = setInterval(fetchPosts, 1000); // Fetch posts every 5 seconds
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
