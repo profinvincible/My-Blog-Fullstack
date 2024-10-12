@@ -276,7 +276,6 @@
 //     </div>
 //   );
 // }
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -284,49 +283,45 @@ export default function MainPage() {
   const [postList, setPostList] = useState([]);
   const [updatePostId, setUpdatePostId] = useState(null);
   const [updatedPostText, setUpdatedPostText] = useState("");
-  const [loading, setLoading] = useState(true);
 
-  // Fetch posts when the component mounts
   useEffect(() => {
-    fetchPosts();
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("https://my-blog-fullstack.onrender.com/get");
+        console.log("API response:", response.data);
+        setPostList(response.data); // Update postList state with fetched data
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts(); // Initial fetch
+    const intervalId = setInterval(fetchPosts, 5000); // Fetch posts every 5 seconds
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
-  // Fetch posts function
-  const fetchPosts = async () => {
-    try {
-      const response = await axios.get("https://my-blog-fullstack.onrender.com/get");
-      console.log("API response:", response.data);
-      setPostList(response.data); // Update postList state with fetched data
-      setLoading(false); // Turn off loading when data is fetched
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      setLoading(false); // Even if there's an error, stop loading
-    }
-  };
-
-  // Like post function
   const likePost = async (id) => {
     try {
       const response = await axios.post(`https://my-blog-fullstack.onrender.com/like/${id}`);
-      // Re-fetch posts to update UI after liking a post
-      fetchPosts();
+      const updatedPostList = postList.map((post) =>
+        post.id === id ? { ...post, likes: response.data.likes } : post
+      );
+      setPostList(updatedPostList);
     } catch (error) {
       console.error("Error liking post:", error);
     }
   };
 
-  // Delete post function
   const deletePost = async (id) => {
     try {
       await axios.delete(`https://my-blog-fullstack.onrender.com/delete/${id}`);
-      // Re-fetch posts to update UI after deleting a post
-      fetchPosts();
+      const updatedPostList = postList.filter((post) => post.id !== id);
+      setPostList(updatedPostList);
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
 
-  // Update post function
   const handleUpdate = (id) => {
     setUpdatePostId(id);
     const postToUpdate = postList.find((post) => post.id === id);
@@ -334,23 +329,20 @@ export default function MainPage() {
   };
 
   const handleSaveUpdate = async (id) => {
+    console.log("Updating post with:", updatedPostText);
     try {
       await axios.put(`https://my-blog-fullstack.onrender.com/update/${id}`, { updatedPostText });
-      // Clear update fields and re-fetch posts after update
-      setUpdatePostId(null);
+      const updatedPostList = postList.map((post) =>
+        post.id === id ? { ...post, post_text: updatedPostText } : post
+      );
+      setPostList(updatedPostList);
       setUpdatedPostText("");
-      fetchPosts(); // Fetch posts again to reflect the updated post
+      setUpdatePostId(null);
     } catch (error) {
       console.error("Error updating post:", error);
     }
   };
 
-  // Loading state handler
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // Main render
   return (
     <div className="MainPage">
       <div className="Everything">
@@ -359,9 +351,7 @@ export default function MainPage() {
             <div key={post.id} className="Posts">
               <h1>{post.title}</h1>
               <p>{post.post_text.length > 100 ? post.post_text.substring(0, 100) + "..." : post.post_text}</p>
-              <button onClick={() => likePost(post.id)}>
-                {post.likes > 0 ? `Like (${post.likes})` : "Like"}
-              </button>
+              <button onClick={() => likePost(post.id)}>{post.likes > 0 ? `Like (${post.likes})` : "Like"}</button>
               <div className="flex">
                 <h4>{post.username}</h4>
                 <h4>{post.likes}</h4>
@@ -369,11 +359,7 @@ export default function MainPage() {
               <div>
                 {updatePostId === post.id ? (
                   <div>
-                    <input
-                      type="text"
-                      value={updatedPostText}
-                      onChange={(event) => setUpdatedPostText(event.target.value)}
-                    />
+                    <input type="text" value={updatedPostText} onChange={(event) => setUpdatedPostText(event.target.value)} />
                     <button onClick={() => handleSaveUpdate(post.id)}>Save</button>
                     <button onClick={() => setUpdatePostId(null)}>Cancel</button>
                   </div>
